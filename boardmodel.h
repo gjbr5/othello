@@ -1,8 +1,8 @@
 #ifndef BOARDMODEL_H
 #define BOARDMODEL_H
+
 #include "board.h"
 #include <QAbstractTableModel>
-#include <iostream>
 
 Q_DECLARE_METATYPE(QVector<int>)
 

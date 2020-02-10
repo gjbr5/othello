@@ -24,7 +24,7 @@ void User::pushIndex(size_t index)
 
 size_t User::nextDisk(const Board board)
 {
-    qDebug() << "User's Turn";
+    qInfo() << "User's Turn";
     while (!inputQueue.empty())
         inputQueue.pop();
 

@@ -2,6 +2,7 @@
 #include "flip.h"
 #include <QDebug>
 #include <memory.h>
+
 Board::Board()
     : black(0x0000'0008'1000'0000)
     , white(0x0000'0010'0800'0000)

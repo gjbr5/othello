@@ -1,17 +1,15 @@
 #include "networkclient.h"
 #include <QHostAddress>
-#include <QTimer>
 #include <sstream>
-#include <string>
 
 NetworkClient::NetworkClient(uint32_t ip, uint16_t port)
 {
     // Connect
     socket.connectToHost(QHostAddress(ip), port);
-    qInfo().noquote().nospace() << "Server: " << QHostAddress(ip).toString() << ":" << port;
+    qDebug().noquote().nospace() << "Server: " << QHostAddress(ip).toString() << ":" << port;
     qInfo() << "Server Connecting...";
     if (!socket.waitForConnected()) {
-        qInfo().noquote() << socket.errorString();
+        qWarning().noquote() << socket.errorString();
         throw socket.error();
     }
     qInfo() << "Successfully Connected.";
@@ -30,7 +28,7 @@ void NetworkClient::send(std::string data)
     // Send
     socket.write(data.c_str(), data.size());
     if (!socket.waitForBytesWritten()) {
-        qInfo() << socket.errorString();
+        qWarning() << socket.errorString();
         throw socket.error();
     }
 }

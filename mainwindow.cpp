@@ -6,7 +6,6 @@
 #include "ui_mainwindow.h"
 #include "user.h"
 #include <QDebug>
-#include <QThread>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)

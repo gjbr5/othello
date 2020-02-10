@@ -1,6 +1,5 @@
 #include "game.h"
 #include <QDebug>
-#include <QTimer>
 
 Game::Game(BoardModel* bm, PanelModel* pm)
     : bm(bm)

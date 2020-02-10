@@ -19,8 +19,6 @@ LocalGame::~LocalGame()
 
 void LocalGame::run()
 {
-    qInfo() << "Game Start!";
-
     std::srand(std::time(nullptr));
     if (std::rand() % 2) {
         black->setTeam(Team::BLACK);
@@ -53,7 +51,7 @@ void LocalGame::run()
         // Set Next Disk
         size_t nextDisk = turn == Team::BLACK ? black->nextDisk(board) : white->nextDisk(board);
 
-        qDebug().nospace() << "Disk = " << nextDisk << "(" << nextDisk / 8 << ", " << nextDisk % 8 << ")";
+        qInfo().nospace() << "Disk = " << nextDisk << "(" << nextDisk / 8 << ", " << nextDisk % 8 << ")";
 
         board.setDisk(nextDisk, turn);
         updateModel();

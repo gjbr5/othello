@@ -35,7 +35,7 @@ void NetworkGame::run()
         } else if (code == "turn") {
             size_t nextDisk = player->nextDisk(board);
             client.sendMove(nextDisk, token);
-            qDebug().nospace() << "Disk = " << nextDisk << "(" << nextDisk / 8 << ", " << nextDisk % 8 << ")";
+            qInfo().nospace() << "Disk = " << nextDisk << "(" << nextDisk / 8 << ", " << nextDisk % 8 << ")";
         } else if (code == "end") {
             break;
         } else {

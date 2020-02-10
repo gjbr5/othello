@@ -1,8 +1,7 @@
 #include "ai.h"
 #include <QDebug>
-#include <iostream>
+#include <chrono>
 #include <queue>
-#include <vector>
 
 AI::AI()
     : rand(std::random_device()())
@@ -22,14 +21,12 @@ struct AI::Evaluation& AI::Evaluation::operator+=(const int score)
     return *this;
 }
 
-double AI::Evaluation::score()
-{
-    return double(wins) / double(count);
-}
+double AI::Evaluation::score() { return double(wins) / double(count); }
 
 size_t AI::nextDisk(const Board board)
 {
-    qDebug() << "AI Thinking...";
+    qInfo() << "AI Thinking...";
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     BitBoard moves = board.allLegalMove(team);
     size_t moveCnt = moves.count();
 
@@ -43,7 +40,7 @@ size_t AI::nextDisk(const Board board)
     }
 
     // Simulation
-    for (size_t i = moveCnt * 5000; i; i--) {
+    for (size_t i = moveCnt * 7500; i; i--) {
         Evaluation eval = evals.front();
         eval += simulate(board, team, eval.move);
         evals.pop();
@@ -60,6 +57,9 @@ size_t AI::nextDisk(const Board board)
             best = comp;
         evals.pop();
     }
+
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    qInfo().nospace() << "Elapsed: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "ms";
     return best.move;
 }
 

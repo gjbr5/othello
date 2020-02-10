@@ -1,7 +1,6 @@
 #ifndef AI_H
 #define AI_H
 
-#include "board.h"
 #include "player.h"
 #include <random>
 

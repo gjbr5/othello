@@ -1,6 +1,5 @@
 #include "networkdialog.h"
 #include "ui_networkdialog.h"
-#include <QDebug>
 
 NetworkDialog::NetworkDialog(QWidget* parent)
     : QDialog(parent)

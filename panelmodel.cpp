@@ -1,6 +1,5 @@
 #include "panelmodel.h"
 #include <QString>
-#include <iostream>
 
 PanelModel::PanelModel(QObject* parent)
     : QAbstractListModel(parent)

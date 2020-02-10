@@ -6,6 +6,7 @@
 #include "panelmodel.h"
 #include <QDataWidgetMapper>
 #include <QMainWindow>
+#include <QThread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
