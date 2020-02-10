@@ -4,38 +4,37 @@
 #include <cstdlib>
 #include <ctime>
 
-LocalGame::LocalGame(BoardModel* bm, PanelModel* pm, AI* ai)
+LocalGame::LocalGame(BoardModel* bm, PanelModel* pm, Player* player1, Player* player2)
     : Game(bm, pm)
-    , ai(ai)
+    , black(player1)
+    , white(player2)
 {
 }
 
 LocalGame::~LocalGame()
 {
-    if (ai)
-        delete ai;
+    delete black;
+    delete white;
 }
 
 void LocalGame::run()
 {
     qInfo() << "Game Start!";
-    bool aiFirst = false;
-    if (ai) {
-        // Single Play
-        std::srand(std::time(nullptr));
-        aiFirst = std::rand() % 2 == 0;
-        if (aiFirst) {
-            ai->setTeam(Team::BLACK);
-            qInfo() << "You are White.";
-        } else {
-            ai->setTeam(Team::WHITE);
-            qInfo() << "You are Black.";
-        }
-    }
 
-    //    // Timeout
-    //    QTimer timer;
-    //    timer.setInterval(std::chrono::milliseconds(1500));
+    std::srand(std::time(nullptr));
+    if (std::rand() % 2) {
+        black->setTeam(Team::BLACK);
+        white->setTeam(Team::WHITE);
+        qInfo() << "Player1 is BLACK, Player2 is WHITE";
+    } else {
+        Player* tmp = black;
+        black = white;
+        white = tmp;
+
+        black->setTeam(Team::BLACK);
+        white->setTeam(Team::WHITE);
+        qInfo() << "Player2 is BLACK, Player1 is WHITE";
+    }
 
     turn = Team::BLACK;
 
@@ -52,19 +51,13 @@ void LocalGame::run()
         }
 
         // Set Next Disk
-        //        timer.start();
-        size_t nextDisk;
-        if (ai)
-            if (aiFirst)
-                nextDisk = turn == Team::BLACK ? ai->nextDisk(board) : userInput(placeable);
-            else
-                nextDisk = turn == Team::BLACK ? userInput(placeable) : ai->nextDisk(board);
-        else
-            nextDisk = userInput(placeable);
+        size_t nextDisk = turn == Team::BLACK ? black->nextDisk(board) : white->nextDisk(board);
+
         qDebug().nospace() << "Disk = " << nextDisk << "(" << nextDisk / 8 << ", " << nextDisk % 8 << ")";
-        //        timer.stop();
+
         board.setDisk(nextDisk, turn);
         updateModel();
+
         changeTurn();
     }
     // Game Over

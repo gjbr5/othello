@@ -1,21 +1,20 @@
 #ifndef NETWORKGAME_H
 #define NETWORKGAME_H
 
-#include "ai.h"
 #include "game.h"
 #include "networkclient.h"
+#include "player.h"
 
 class NetworkGame : public Game {
     Q_OBJECT
 private:
     NetworkClient client;
-    AI* ai;
+    Player* player;
     bool isLocalFirst;
     std::string token;
-    Team team;
 
 public:
-    NetworkGame(BoardModel* bm, PanelModel* pm, uint32_t ip, uint16_t port, AI* ai = nullptr);
+    NetworkGame(BoardModel* bm, PanelModel* pm, uint32_t ip, uint16_t port, Player* player);
     ~NetworkGame() override;
     void run() override;
 };

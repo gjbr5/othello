@@ -29,7 +29,9 @@ SOURCES += \
     networkclient.cpp \
     networkdialog.cpp \
     networkgame.cpp \
-    panelmodel.cpp
+    panelmodel.cpp \
+    player.cpp \
+    user.cpp
 
 HEADERS += \
     ai.h \
@@ -43,7 +45,9 @@ HEADERS += \
     networkdialog.h \
     networkgame.h \
     panelmodel.h \
-    team.h
+    player.h \
+    team.h \
+    user.h
 
 FORMS += \
     mainwindow.ui \

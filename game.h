@@ -15,11 +15,6 @@ private:
     BoardModel* bm;
     PanelModel* pm;
 
-    std::mutex inputMutex;
-    std::condition_variable cv;
-    std::queue<size_t> inputQueue;
-    std::atomic_bool userTurn;
-
 protected:
     Board board;
     Team turn = Team::NONE;
@@ -27,14 +22,12 @@ protected:
 protected:
     Game(BoardModel* bm, PanelModel* pm);
     void changeTurn();
-    size_t userInput(BitBoard placeable);
     void gameOver();
     void updateModel();
 
 public:
     Team getTurn();
     virtual ~Game();
-    void pushIndex(size_t index);
     virtual void run() = 0;
 };
 

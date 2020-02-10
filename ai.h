@@ -2,14 +2,13 @@
 #define AI_H
 
 #include "board.h"
-#include <QObject>
+#include "player.h"
 #include <random>
 
-class AI : public QObject {
+class AI : public Player {
     Q_OBJECT
 
 private:
-    Team team;
     std::mt19937_64 rand;
 
     struct Evaluation {
@@ -21,13 +20,13 @@ private:
         double score();
     };
 
-public:
-    AI();
-    void setTeam(Team team);
-    size_t nextDisk(const Board board);
+private:
     int simulate(Board board, Team team, size_t next);
     Team opponent(Team team);
-    //    virtual size_t nextDisk(BitLoc friendly, BitLoc enemy)
+
+public:
+    AI();
+    size_t nextDisk(const Board board) override;
 };
 
 #endif // AI_H

@@ -9,11 +9,6 @@ AI::AI()
 {
 }
 
-void AI::setTeam(Team team)
-{
-    this->team = team;
-}
-
 AI::Evaluation::Evaluation(size_t move)
     : move(move)
 {

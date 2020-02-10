@@ -1,25 +1,19 @@
 #include "networkgame.h"
 
-NetworkGame::NetworkGame(BoardModel* bm, PanelModel* pm, uint32_t ip, uint16_t port, AI* ai)
+NetworkGame::NetworkGame(BoardModel* bm, PanelModel* pm, uint32_t ip, uint16_t port, Player* player)
     : Game(bm, pm)
     , client(ip, port)
-    , ai(ai)
+    , player(player)
 {
     DataMap initData = client.recv();
     board = initData["board"];
     token = initData["token"];
     if (initData["color"] == "b") {
-        if (ai)
-            ai->setTeam(Team::BLACK);
-        else
-            team = Team::BLACK;
+        player->setTeam(Team::BLACK);
         qInfo() << "You are Black.";
         isLocalFirst = true;
     } else {
-        if (ai)
-            ai->setTeam(Team::WHITE);
-        else
-            team = Team::WHITE;
+        player->setTeam(Team::WHITE);
         isLocalFirst = false;
         qInfo() << "You are White.";
     }
@@ -27,9 +21,9 @@ NetworkGame::NetworkGame(BoardModel* bm, PanelModel* pm, uint32_t ip, uint16_t p
 
 NetworkGame::~NetworkGame()
 {
-    if (ai)
-        delete ai;
+    delete player;
 }
+
 void NetworkGame::run()
 {
     while (true) {
@@ -39,7 +33,7 @@ void NetworkGame::run()
             board = data["board"];
             updateModel();
         } else if (code == "turn") {
-            size_t nextDisk = ai ? ai->nextDisk(board) : userInput(board.allLegalMove(team));
+            size_t nextDisk = player->nextDisk(board);
             client.sendMove(nextDisk, token);
             qDebug().nospace() << "Disk = " << nextDisk << "(" << nextDisk / 8 << ", " << nextDisk % 8 << ")";
         } else if (code == "end") {

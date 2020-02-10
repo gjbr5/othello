@@ -4,6 +4,7 @@
 #include "networkdialog.h"
 #include "networkgame.h"
 #include "ui_mainwindow.h"
+#include "user.h"
 #include <QDebug>
 #include <QThread>
 
@@ -61,24 +62,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_boardTable_clicked(const QModelIndex& index)
 {
-    if (game)
-        game->pushIndex(index.row() * 8 + index.column());
+    User::pushIndex(index.row() * 8 + index.column());
 }
 
 void MainWindow::startGame(MainWindow* mw, bool isAI, std::pair<uint32_t, uint16_t>* server)
 {
-    AI* ai = nullptr;
-    if (isAI)
-        ai = new AI();
-
     try {
-        if (server)
-            mw->game = new NetworkGame(mw->bm, mw->pm, server->first, server->second, ai);
-        else
-            mw->game = new LocalGame(mw->bm, mw->pm, ai);
+        if (server) {
+            if (isAI)
+                mw->game = new NetworkGame(mw->bm, mw->pm, server->first, server->second, new AI());
+            else
+                mw->game = new NetworkGame(mw->bm, mw->pm, server->first, server->second, new User(mw->bm));
+        } else {
+            if (isAI)
+                mw->game = new LocalGame(mw->bm, mw->pm, new User(mw->bm), new AI());
+            else
+                mw->game = new LocalGame(mw->bm, mw->pm, new User(mw->bm), new User(mw->bm));
+        }
         mw->game->run();
     } catch (QAbstractSocket::SocketError) {
-        qDebug() << "Socet Error";
+        qWarning() << "Socet Error";
     }
 }
 

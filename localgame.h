@@ -1,19 +1,17 @@
 #ifndef LOCALGAME_H
 #define LOCALGAME_H
 
-#include "ai.h"
-#include "boardmodel.h"
 #include "game.h"
-#include "mainwindow.h"
-#include "panelmodel.h"
+#include "player.h"
 
 class LocalGame : public Game {
     Q_OBJECT
 private:
-    AI* ai;
+    Player* black;
+    Player* white;
 
 public:
-    LocalGame(BoardModel* bm, PanelModel* pm, AI* ai = nullptr);
+    LocalGame(BoardModel* bm, PanelModel* pm, Player* player1, Player* player2);
     void run() override;
     ~LocalGame() override;
 };
