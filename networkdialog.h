@@ -13,8 +13,8 @@ class NetworkDialog : public QDialog {
 public:
     explicit NetworkDialog(QWidget* parent = nullptr);
     ~NetworkDialog();
-    std::pair<uint32_t, uint16_t> getServer();
-    bool isAIPlayer();
+    std::pair<uint32_t, uint16_t> getServer() const;
+    bool isAIPlayer() const;
 
 private:
     Ui::NetworkDialog* ui;

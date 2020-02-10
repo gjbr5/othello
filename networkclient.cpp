@@ -20,7 +20,6 @@ NetworkClient::NetworkClient(uint32_t ip, uint16_t port)
 NetworkClient::~NetworkClient()
 {
     socket.disconnectFromHost();
-    socket.waitForDisconnected();
     socket.close();
 }
 

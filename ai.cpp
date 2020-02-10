@@ -19,7 +19,7 @@ AI::Evaluation::Evaluation(size_t move)
 {
 }
 
-struct AI::Evaluation& AI::Evaluation::operator+=(const size_t score)
+struct AI::Evaluation& AI::Evaluation::operator+=(const int score)
 {
     count++;
     if (score > 0)
@@ -48,7 +48,7 @@ size_t AI::nextDisk(const Board board)
     }
 
     // Simulation
-    for (size_t i = moveCnt * 1000; i; i--) {
+    for (size_t i = moveCnt * 5000; i; i--) {
         Evaluation eval = evals.front();
         eval += simulate(board, team, eval.move);
         evals.pop();
@@ -56,9 +56,11 @@ size_t AI::nextDisk(const Board board)
     }
 
     Evaluation best = evals.front();
+    qDebug() << best.move << ":" << best.wins << "/" << best.count << "=" << best.score();
     evals.pop();
     while (!evals.empty()) {
         Evaluation& comp = evals.front();
+        qDebug() << comp.move << ":" << comp.wins << "/" << comp.count << "=" << comp.score();
         if (comp.score() > best.score())
             best = comp;
         evals.pop();

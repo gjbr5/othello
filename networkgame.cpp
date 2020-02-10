@@ -9,11 +9,17 @@ NetworkGame::NetworkGame(BoardModel* bm, PanelModel* pm, uint32_t ip, uint16_t p
     board = initData["board"];
     token = initData["token"];
     if (initData["color"] == "b") {
-        ai->setTeam(Team::BLACK);
+        if (ai)
+            ai->setTeam(Team::BLACK);
+        else
+            team = Team::BLACK;
         qInfo() << "You are Black.";
         isLocalFirst = true;
     } else {
-        ai->setTeam(Team::WHITE);
+        if (ai)
+            ai->setTeam(Team::WHITE);
+        else
+            team = Team::WHITE;
         isLocalFirst = false;
         qInfo() << "You are White.";
     }
@@ -33,7 +39,7 @@ void NetworkGame::run()
             board = data["board"];
             updateModel();
         } else if (code == "turn") {
-            size_t nextDisk = ai->nextDisk(board);
+            size_t nextDisk = ai ? ai->nextDisk(board) : userInput(board.allLegalMove(team));
             client.sendMove(nextDisk, token);
             qDebug().nospace() << "Disk = " << nextDisk << "(" << nextDisk / 8 << ", " << nextDisk % 8 << ")";
         } else if (code == "end") {

@@ -17,7 +17,7 @@ private:
         size_t count = 0;
         size_t wins = 0;
         Evaluation(size_t move);
-        struct Evaluation& operator+=(const size_t score);
+        struct Evaluation& operator+=(const int score);
         double score();
     };
 

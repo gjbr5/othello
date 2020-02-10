@@ -12,10 +12,11 @@ private:
     AI* ai;
     bool isLocalFirst;
     std::string token;
+    Team team;
 
 public:
     NetworkGame(BoardModel* bm, PanelModel* pm, uint32_t ip, uint16_t port, AI* ai = nullptr);
-    virtual ~NetworkGame();
+    ~NetworkGame() override;
     void run() override;
 };
 

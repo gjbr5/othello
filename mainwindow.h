@@ -34,6 +34,6 @@ private slots:
 
 public:
     MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 };
 #endif // MAINWINDOW_H

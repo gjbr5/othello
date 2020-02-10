@@ -57,10 +57,6 @@ void Board::setDisk(int position, Team team)
         white = white & ~f;
         black = black | f;
         black.set(position);
-        //        black = white ^ f;
-        //        white = black ^ (f.set(position));
-
-        //black.set(position);
         break;
     case Team::WHITE:
         f = Flip::flip(white.to_ullong(), black.to_ullong(), position);

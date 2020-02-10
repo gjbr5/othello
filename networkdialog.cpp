@@ -14,7 +14,7 @@ NetworkDialog::~NetworkDialog()
     delete ui;
 }
 
-std::pair<uint32_t, uint16_t> NetworkDialog::getServer()
+std::pair<uint32_t, uint16_t> NetworkDialog::getServer() const
 {
     uint8_t ipA = ui->ipASpin->value();
     uint8_t ipB = ui->ipBSpin->value();
@@ -26,7 +26,7 @@ std::pair<uint32_t, uint16_t> NetworkDialog::getServer()
     return std::make_pair(ip, port);
 }
 
-bool NetworkDialog::isAIPlayer()
+bool NetworkDialog::isAIPlayer() const
 {
     return ui->aiCheck->isChecked();
 }

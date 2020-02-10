@@ -18,7 +18,7 @@ private:
 
 public:
     NetworkClient(uint32_t ip, uint16_t port);
-    ~NetworkClient();
+    ~NetworkClient() override;
 
     void sendMove(size_t move, const std::string& token);
     DataMap recv();
